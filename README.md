@@ -1,2 +1,319 @@
-# Roshan-Projects
- Aadhaar Correction Update app using Python Tkinter with MySQL Workbench using Pycharm.
+Aadhaar Correction/Update app using Python Tkinter with MySQL Workbench using Pycharm.
+
+MySQL Workbench
+
+# To Create a database and table in MySQL Workbench for Python Tkinter
+
+
+create database crction;
+
+create table updt (
+Updation varchar(20),
+AadhaarNumber varchar(20),
+FullName varchar(20),
+Gender varchar(20),
+DateofBirth varchar(20),
+Age varchar(20),
+MobileNumber varchar(20),
+Address varchar(50),
+City varchar(40),
+PinCode varchar(20) );
+
+#Pycharm
+
+import tkinter as tk
+from tkinter import ttk, messagebox
+import mysql.connector
+from tkinter import *
+from tkcalendar import DateEntry
+from PIL import Image,ImageTk
+
+root = Tk()
+root.title("AADHAAR CORRECTION/UPDATE FORM")
+root.iconbitmap("aadhaar.ico")
+root.geometry("1368x760+0+0")
+
+def save():# To save the data in the backend
+    aa1 = updation.get()
+    aa2 = aadhaarNumber.get()
+    aa3 = fullname.get()
+    aa4 = gender.get()
+    aa5 = dateofbirth.get()
+    aa6 = age.get()
+    aa7 = mobileno.get()
+    aa8 = address.get()
+    aa9 = city.get()
+    aa10 = pincode.get()
+
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Admin@1234",database="crction")
+    mycursor=mysqldb.cursor()
+
+    try:
+        sql = "INSERT INTO updt (Updation,AadhaarNumber,FullName,Gender,DateofBirth,Age,MobileNumber,Address,City,PinCode) VALUES ( %s , %s , %s , %s , %s, %s, %s, %s, %s, %s)"
+        val = (aa1,aa2,aa3,aa4,aa5,aa6,aa7,aa8,aa9,aa10)
+        mycursor.execute(sql, val)
+        mysqldb.commit()
+        lastid = mycursor.lastrowid
+        messagebox.showinfo("Note", " Your Data has been Stored Successfully!")
+        updation.delete(0, END)
+        aadhaarNumber.delete(0, END)
+        fullname.delete(0, END)
+        gender.delete(0, END)
+        dateofbirth.delete(0, END)
+        age.delete(0, END)
+        mobileno.delete(0, END)
+        address.delete(0, END)
+        city.delete(0, END)
+        pincode.delete(0, END)
+        fullname.focus_set()
+
+    except Exception as a:
+        print(a)
+        mysqldb.rollback()
+        mysqldb.close()
+
+def update():# To update the data in the backend
+    aa1 = updation.get()
+    aa2 = aadhaarNumber.get()
+    aa3 = fullname.get()
+    aa4 = gender.get()
+    aa5 = dateofbirth.get()
+    aa6 = age.get()
+    aa7 = mobileno.get()
+    aa8 = address.get()
+    aa9 = city.get()
+    aa10 = pincode.get()
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Admin@1234",database="crction")
+    mycursor=mysqldb.cursor()
+    try:
+        sql = "UPDATE updt set Updation= %s,AadhaarNumber= %s,FullName= %s,Gender= %s,DateofBirth= %s,Age= %s,MobileNumber= %s,Address= %s,City= %s  where PinCode= %s"
+        val = (aa1,aa2,aa3,aa4,aa5,aa6,aa7,aa8,aa9,aa10)
+        mycursor.execute(sql, val)
+        mysqldb.commit()
+        lastid = mycursor.lastrowid
+        messagebox.showinfo("Note", "Details Updated successfully!!!")
+        a1.delete(0, END)
+        a2.delete(0, END)
+        a3.delete(0, END)
+        a4.delete(0, END)
+        dateofbirth.delete(0, END)
+        a6.delete(0, END)
+        a7.delete(0, END)
+        a8.delete(0, END)
+        a9.delete(0, END)
+        a10.delete(0, END)
+        a3.focus_set()
+
+    except Exception as a:
+        print(a)
+        mysqldb.rollback()
+        mysqldb.close()
+
+def delete():# To delete the data in the backend
+    ad = a3.get()
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Admin@1234",database="crction")
+    mycursor=mysqldb.cursor()
+    try:
+        sql = "delete from updt where FullName= %s"
+        val = (ad,)
+        mycursor.execute(sql,val)
+        mysqldb.commit()
+        lastid = mycursor.lastrowid
+        messagebox.showinfo("Note", "Record Deleted successfully!!!")
+        a1.delete(0, END)
+        a2.delete(0, END)
+        a3.delete(0, END)
+        a4.delete(0, END)
+        dateofbirth.delete(0, END)
+        a6.delete(0, END)
+        a7.delete(0, END)
+        a8.delete(0, END)
+        a9.delete(0, END)
+        a10.delete(0, END)
+        a3.focus_set()
+
+    except Exception as a:
+        print(a)
+        mysqldb.rollback()
+        mysqldb.close()
+
+def clear():  #clear button
+    a1.delete(0, END)
+    a2.delete(0, END)
+    a3.delete(0, END)
+    a4.delete(0, END)
+    dateofbirth.delete(0, END)
+    a6.delete(0, END)
+    a7.delete(0,END)
+    a8.delete(0,END)
+    a9.delete(0,END)
+    a10.delete(0,END)
+    messagebox.showerror("Note", "All the Fields are Cleared")
+
+def exit(): #Exit Button - to exit the tkinter application
+    confirmation = messagebox.askyesno("Confirmation","Do You Want To Exit?")
+    if confirmation > 0:
+        root.destroy()
+        return
+
+def GetValue(event):
+    a1.delete(0, END)
+    a2.delete(0, END)
+    a3.delete(0, END)
+    a4.delete(0, END)
+    dateofbirth.delete(0, END)
+    a6.delete(0, END)
+    a7.delete(0, END)
+    a8.delete(0, END)
+    a9.delete(0, END)
+    a10.delete(0, END)
+    row_id = listBox.selection()[0]
+    select = listBox.set(row_id)
+    a1.insert(0,select['Updation'])
+    a2.insert(0,select['AadhaarNumber'])
+    a3.insert(0,select['FullName'])
+    a4.insert(0,select['Gender'])
+    dateofbirth.insert(0,select['DateofBirth'])
+    a6.insert(0,select['Age'])
+    a7.insert(0,select['MobileNumber'])
+    a8.insert(0,select['Address'])
+    a9.insert(0,select['City'])
+    a10.insert(0,select['PinCode'])
+
+def show():# To display the data in the console
+    mysqldb = mysql.connector.connect(host="localhost", user="root", password="Admin@1234", database="crction")
+    mycursor = mysqldb.cursor()
+    mycursor.execute("SELECT Updation,AadhaarNumber,FullName,Gender,DateofBirth,Age,MobileNumber,Address,City,PinCode FROM updt")
+    records = mycursor.fetchall()
+    print(records)
+
+    for i, (Updation,AadhaarNumber,FullName,Gender,DateofBirth,Age,MobileNumber,Address,City,PinCode) in enumerate(records, start=1):
+        listBox.insert("", "end", values=(Updation,AadhaarNumber,FullName,Gender,DateofBirth,Age,MobileNumber,Address,City,PinCode))
+        mysqldb.close()
+
+updation = StringVar()
+aadhaarNumber = StringVar()
+fullname = StringVar()
+gender = StringVar()
+dateofbirth = StringVar()
+age = StringVar()
+mobileno = StringVar()
+address = StringVar()
+city = StringVar()
+pincode = StringVar()
+
+#Frame
+
+Topframe = Frame(root,bd=11,relief=RIDGE,bg="#3E6D9C")
+Topframe.place(x=0,y=90,width=1366,height=389)
+
+Bottomframe = Frame(root,bd=11,relief=RIDGE,bg="#3E6D9C")
+Bottomframe.place(x=0,y=480,width=1366,height=220)
+
+#Headings&Logos
+tk.Label(root,text="AADHAAR CORRECTION / UPDATE FORM ",font=" Cosmic 32 bold",fg="#EB1D36").place(x=250,y=14)
+
+bgimg = ImageTk.PhotoImage(Image.open("uiao1.png").convert('RGBA'))
+myl = Label(image=bgimg).place(x=1,y=1)
+
+bhimg = ImageTk.PhotoImage(Image.open("uiai1.png").convert('RGBA'))
+mym = Label(image=bhimg).place(x=1220,y=1)
+
+
+#Labels
+al1 = Label(root, text="   Enter Updation",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al1.place(x=60,y=125)
+
+all1 =Label(root,text="(Name/Mobile/DOB/Address/Gender)",bg="#3E6D9C",fg="#FFF",font="None 8 bold",anchor=CENTER)
+all1.place(x=60,y=155)
+
+al2 = Label(root, text="   Aadhaar Number",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al2.place(x=60, y=185)
+
+al3 = Label(root, text="   Full Name",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al3.place(x=60, y=240)
+
+al4 = Label(root, text="   Gender",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al4.place(x=60, y=300)
+
+al5 = Label(root, text="   Date of Birth",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al5.place(x=60,y=360)
+
+al6 = Label(root, text="Age",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al6.place(x=650, y=120)
+
+al7 = Label(root, text="Mobile Number",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al7.place(x=650, y=180)
+
+al8 = Label(root, text="Address",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al8.place(x=650, y=240)
+
+al9 = Label(root, text="City",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al9.place(x=650, y=300)
+
+al10 = Label(root, text="Pin Code",bg="#3E6D9C",fg="#FFF",font="None 15 bold",anchor=CENTER)
+al10.place(x=650, y=360)
+
+#Entrybox
+
+a1 = Entry(root,font=(None,15),bg="White",justify="right",insertwidth=4,bd=2,textvariable=updation)
+a1.place(x=320, y=128)
+
+a2 = Entry(root,font=(None,15),bg="White",justify="right",insertwidth=4,bd=2,textvariable=aadhaarNumber)
+a2.place(x=320, y=185)
+
+a3 = Entry(root,font=(None,15),bg="White",justify="right",insertwidth=4,bd=2,textvariable=fullname)
+a3.place(x=320, y=240)
+
+a4 = Entry(root,font=(None,15),bg="White",justify="right",insertwidth=4,bd=2,textvariable=gender)
+a4.place(x=320, y=305)
+
+dateofbirth = DateEntry(root,width=35,year=2010)
+dateofbirth.place(x=320, y=365)
+
+a6 = Entry(root,font=(None,15),justify="right",insertwidth=4,bd=2,textvariable=age)
+a6.place(x=870,y=120)
+
+a7 = Entry(root,font=(None,15),justify="right",insertwidth=4,bd=2,textvariable=mobileno)
+a7.place(x=870, y=180)
+
+a8 = Entry(root,font=(None,15),justify="right",insertwidth=4,bd=2,textvariable=address)
+a8.place(x=870, y=240)
+
+a9 = Entry(root,font=(None,15),justify="right",insertwidth=4,bd=2,textvariable=city)
+a9.place(x=870,y=300)
+
+a10 = Entry(root,font=(None,15),justify="right",insertwidth=4,bd=2,textvariable=pincode)
+a10.place(x=870,y=360)
+
+#Buttons
+S = Button(root , text="Save Data", font=('Arial',13,'bold'),bg='#001253',fg='#FFF',bd=3,command = save,height=2, width= 15)
+S.place(x=50, y=405)
+
+C = Button(root , text="Clear", font=('Arial',13,'bold'),bg='#001253',fg='#FFF',bd=3,command = clear,height=2, width= 15)
+C.place(x=320, y=405)
+
+U = Button(root , text="Update Data", font=('Arial',13,'bold'),bg='#001253',fg='#FFF',bd=3,command = update,height=2, width= 15)
+U.place(x=610, y=405)
+
+D = Button(root , text="Delete", font=('Arial',13,'bold'),bg='#001253',fg='#FFF',bd=3,command = delete,height=2, width= 15)
+D.place(x=900, y=405)
+
+E = Button(root , text="Exit", font=('Arial',13,'bold'),bg= '#001253',fg='#FFF',bd=3,command=exit,height=2, width=15)
+E.place(x=1150, y=405)
+
+
+#listbox for displaying the datas
+
+cols = ('Updation','AadhaarNumber','FullName','Gender','DateofBirth','Age','MobileNumber','Address','City','PinCode')
+listBox = ttk.Treeview(root, columns=cols, show='headings')
+
+
+for col in cols:
+    listBox.heading(col, text=col)
+    listBox.grid(row=1, column=0, columnspan=2)
+    listBox.place(x=8, y=489,height=199,width=1346)
+
+show()
+listBox.bind('<Double-Button-1>',GetValue)#double click the row in the listbox widget to display the data in the entry box
+root.mainloop()
