@@ -19,7 +19,7 @@ Address varchar(50),
 City varchar(40),
 PinCode varchar(20) );
 
-#Pycharm
+#Write this code in IDE Pycharm
 
 import tkinter as tk
 from tkinter import ttk, messagebox
