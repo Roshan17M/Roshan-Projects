@@ -1,5 +1,7 @@
 Aadhaar Correction/Update app using Python Tkinter with MySQL Workbench using Pycharm.
 
+Note : Change the username and password of your Sql(host="localhost",user="root",password="Admin@1234",database="crction")
+
 MySQL Workbench
 
 # To Create a database and table in MySQL Workbench for Python Tkinter
@@ -303,7 +305,7 @@ E = Button(root , text="Exit", font=('Arial',13,'bold'),bg= '#001253',fg='#FFF',
 E.place(x=1150, y=405)
 
 
-#listbox for displaying the datas
+#Listbox for displaying the datas
 
 cols = ('Updation','AadhaarNumber','FullName','Gender','DateofBirth','Age','MobileNumber','Address','City','PinCode')
 listBox = ttk.Treeview(root, columns=cols, show='headings')
@@ -315,5 +317,5 @@ for col in cols:
     listBox.place(x=8, y=489,height=199,width=1346)
 
 show()
-listBox.bind('<Double-Button-1>',GetValue)#double click the row in the listbox widget to display the data in the entry box
+listBox.bind('<Double-Button-1>',GetValue) #Double click the row in the listbox widget to display the data in the entry box
 root.mainloop()
